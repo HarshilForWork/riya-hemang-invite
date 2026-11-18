@@ -1,4 +1,6 @@
-# Riya + Hemang — wedding website
+# Riya + Hemang — wedding website (short invite)
+
+> This is the **short invite** (live at https://riya-hemang-invite.vercel.app): a trimmed copy of the full site (`HarshilForWork/Hemang-riya`). See [CONTEXT.md](CONTEXT.md) for what's different. The text below describes the shared code.
 
 A single-page wedding site for Riya & Hemang: our story, the Sangeet (22 January 2027, Navi Mumbai) and the Wedding (27 January 2027, Nadiad), RSVP contacts, FAQ and `#RiyaSangHemang`.
 
