@@ -10,7 +10,12 @@ const [url, width, height, mobile, testFile] = process.argv.slice(2);
 const body = readFileSync(testFile, "utf8");
 const port = 9300 + Math.floor(Math.random() * 500);
 const profile = mkdtempSync(join(process.env.TMPDIR || tmpdir(), "rh-chrome-"));
-const chrome = spawn("/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", [
+// Where Chrome is: set CHROME to override. Defaults for macOS, Windows and Linux.
+const chromePath = process.env.CHROME || {
+  darwin: "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
+  win32: "C:/Program Files/Google/Chrome/Application/chrome.exe",
+}[process.platform] || "google-chrome";
+const chrome = spawn(chromePath, [
   "--headless=new", `--remote-debugging-port=${port}`, `--user-data-dir=${profile}`,
   "--no-first-run", "--no-default-browser-check", "--disable-gpu", "about:blank",
 ], { stdio: "ignore" });
@@ -70,5 +75,5 @@ try {
   try { ws?.close(); } catch {}
   chrome.kill("SIGTERM");
   await sleep(300);
-  rmSync(profile, { recursive: true, force: true });
+  rmSync(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
 }
