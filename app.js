@@ -17,6 +17,10 @@
      CONTENT — edit here. Every text has an English (en) and Gujarati (gu) version.
      ========================================================= */
 
+  // Riya's link (/riya, see vercel.json): the same invite for Riya's guests, with her family as the contacts
+  // (CONTACTS, the FAQ link and the RSVP answer) instead of Hemang and Harsh. Everything else is the same.
+  const RIYA = location.pathname === "/riya" || location.pathname === "/riya/";
+
   // Static page text, matched to data-i18n="key" in index.html
   const UI = {
     en: {
@@ -130,10 +134,25 @@
   ];
   const ROTATIONS = [-2.5, 1.8, -1.2, 2.2, -1.6];
 
-  const CONTACTS = [
+  // Who guests can call or WhatsApp. Riya's link sends her guests to her family, the main link to Hemang's.
+  const CONTACTS = RIYA ? [
+    { en: "Dharmesh Raval", gu: "ધર્મેશ રાવલ", tel: "+919998870158", display: "+91 99988 70158" },
+    { en: "Kunj Raval", gu: "કુંજ રાવલ", tel: "+917016906401", display: "+91 70169 06401" },
+  ] : [
     { en: "Hemang", gu: "હેમાંગ", tel: "+919769333516", display: "+91 97693 33516" },
     { en: "Harsh", gu: "હર્ષ", tel: "+918369894213", display: "+91 83698 94213" },
   ];
+  if (RIYA) {
+    UI.en.faqLink = "Reach out to Dharmesh or Kunj";
+    UI.gu.faqLink = "ધર્મેશ અથવા કુંજનો સંપર્ક કરો";
+  }
+  // "Reach out to …" under the FAQ title calls the first contact
+  $$(".faq__link").forEach((a) => (a.href = `tel:${CONTACTS[0].tel}`));
+  // last line of the RSVP answer in the FAQ: the same people as CONTACTS
+  const CALL_US = {
+    en: `You can also call or text ${CONTACTS.map((c) => `${c.en} (${c.display})`).join(" or ")}.`,
+    gu: `આપ ${CONTACTS.map((c) => `${c.gu} (${c.display})`).join(" અથવા ")} ને ફોન કે મેસેજ પણ કરી શકો છો.`,
+  };
   const mapsEmbed = (q) => `https://maps.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
   const mapsLink = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 
@@ -215,12 +234,12 @@
 
   const FAQ = {
     en: [
-      ["How do I RSVP?", ["Tap RSVP at the top of this page and fill in the short form. It also asks about travel and accommodation.", "You can also call or text Hemang (+91 97693 33516) or Harsh (+91 83698 94213)."]],
+      ["How do I RSVP?", ["Tap RSVP at the top of this page and fill in the short form. It also asks about travel and accommodation.", CALL_US.en]],
       ["I'm travelling from Mumbai to Nadiad. Can you help?", ["Yes. Travel & Stay lists suggested trains for 26 and 27 January, and the RSVP form lets you ask for help with tickets and a stay in Nadiad."]],
       ["Do you have a wedding hashtag?", ["Yes! Please share your photos with #RiyaSangHemang."]],
     ],
     gu: [
-      ["હાજરી કેવી રીતે જણાવું?", ["આ પેજની ઉપર 'હાજરી જણાવો' પર ટૅપ કરીને નાનું ફોર્મ ભરો. તેમાં મુસાફરી અને રોકાણ વિશે પણ પૂછ્યું છે.", "આપ હેમાંગ (+91 97693 33516) અથવા હર્ષ (+91 83698 94213) ને ફોન કે મેસેજ પણ કરી શકો છો."]],
+      ["હાજરી કેવી રીતે જણાવું?", ["આ પેજની ઉપર 'હાજરી જણાવો' પર ટૅપ કરીને નાનું ફોર્મ ભરો. તેમાં મુસાફરી અને રોકાણ વિશે પણ પૂછ્યું છે.", CALL_US.gu]],
       ["હું મુંબઈથી નડિયાદ આવું છું. મદદ મળશે?", ["હા. 'પ્રવાસ અને રોકાણ'માં ૨૬ અને ૨૭ જાન્યુઆરીની સૂચવેલી ટ્રેનો છે, અને હાજરીના ફોર્મમાં ટિકિટ તથા નડિયાદમાં રોકાણ માટે મદદ માગી શકો છો."]],
       ["લગ્નનો કોઈ હેશટૅગ છે?", ["હા! આપના ફોટા #RiyaSangHemang સાથે શેર કરજો."]],
     ],
