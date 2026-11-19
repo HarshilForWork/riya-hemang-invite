@@ -2,6 +2,7 @@
 // her family, Dharmesh Raval (dad) and Kunj Raval (brother). Neither link may show the other family's names or
 // numbers: page text, the FAQ's "Reach out to …" link, the RSVP answer in the FAQ, any pop-up, any link.
 // Everything else (RSVP form, events, Travel & Stay) is the same on both links.
+// The countdown line names both families, each side's own first: Raval on /riya, Bhanushali on / (no apostrophes).
 // node tools/test/cdp-test.mjs "http://localhost:5182/riya?lang=en" 390 664 1 tools/test/test-contacts.js
 // (/riya needs tools/serve.py locally; plain http.server can't serve it)
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -18,7 +19,7 @@ document.getElementById("intro").click();
 await wait(400);
 const opened = []; const realOpen = window.open;
 window.open = (url) => { opened.push(url); return null; }; // RSVP buttons open the Google Form; keep it from opening
-const out = { mode: RIYA ? "riya (her family's contacts)" : "main (Hemang and Harsh)", contacts: {}, wrongContacts: [] };
+const out = { mode: RIYA ? "riya (her family's contacts)" : "main (Hemang and Harsh)", contacts: {}, wrongContacts: [], familyLine: {}, familyLineWrong: [] };
 for (const l of ["en", "gu", "mix"]) {
   $("#langToggle").click(); await wait(60); $(`[data-lang="${l}"]`).click(); await wait(300);
   $$(".faq__item").forEach((i) => i.classList.add("is-open"));
@@ -32,6 +33,11 @@ for (const l of ["en", "gu", "mix"]) {
     $(".sheet__x").click(); await wait(350);
   }
   out.wrongContacts.push(...find(WRONG, `[${l}]`, all));
+  const lead = $('[data-i18n="eventLead"]').textContent;
+  out.familyLine[l] = lead;
+  const at = (re) => lead.search(re), raval = at(/Raval|રાવલ/), bhanushali = at(/Bhanushali|ભાનુશાલી/);
+  if (raval < 0 || bhanushali < 0 || (RIYA ? raval > bhanushali : bhanushali > raval)) out.familyLineWrong.push(`[${l}] should name ${RIYA ? "the Ravals" : "the Bhanushalis"} first: ${lead}`);
+  if (/'s|’s/.test(lead)) out.familyLineWrong.push(`[${l}] apostrophe in the family names: ${lead}`);
   if (!RIGHT.test(link.textContent + link.href) || !RIGHT.test(rsvpAnswer)) out.wrongContacts.push(`[${l}] the FAQ link or RSVP answer doesn't name the right family`);
 }
 $("#langToggle").click(); await wait(60); $('[data-lang="en"]').click(); await wait(200);

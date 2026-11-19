@@ -18,7 +18,7 @@ The couple sends each group of guests **one** link. There are **three separate c
 | **Sangeet-only guests** (Hemang's friends) | https://heya-sangeet.vercel.app | Only the Sangeet (Fri 22 Jan 2027, Nerul, Navi Mumbai). **Never the wedding** | Its own Sangeet-only Google Form, in English: name, coming?, how many (made 19 Nov 2026 from the script in that repo's `tools/forms/`) | `HarshilForWork/Hemang-riya-sangeet` (public) · `sangeet-site/` |
 | **Riya's friends** who won't come but should still get the invite | **https://heya-sangeet.vercel.app/riya** | The same Sangeet page, with Riya's family as the contacts (Dharmesh and Kunj Raval) | **None**: no RSVP button, section, card or FAQ | Same repo and page; the path switches RSVP off and the contacts |
 
-- **Contacts** (19 Nov 2026): the `/` links give Hemang (+91 97693 33516) and Harsh (+91 83698 94213). Both `/riya` links (rows 3 and 5) give Riya's family instead, Dharmesh Raval (her dad, +91 99988 70158) and Kunj Raval (her brother, +91 70169 06401), so her guests reach her family and Hemang's guests reach his.
+- **Contacts** (19 Nov 2026): the `/` links give Hemang (+91 97693 33516) and Harsh (+91 83698 94213). Both `/riya` links (rows 3 and 5) give Riya's family instead, Dharmesh Raval (her dad, +91 99988 70158) and Kunj Raval (her brother, +91 70169 06401), so her guests reach her family and Hemang's guests reach his. Out of respect her dad is always written **Mr. Dharmesh Kumar Raval** (શ્રી ધર્મેશકુમાર રાવલ) on the sites, and the FAQ link reads "Reach out to Mr. Dharmesh Kumar Raval and Kunj" (Hemang, 19 Nov 2026).
 - **Never send a Sangeet-only guest (rows 4–5) any of the first three links**: they show the wedding. Never put wedding details on the Sangeet site.
 - The copies don't share code. A fix or content change (RSVP link, contacts, photos, wording, bug fixes) reaches only the site you change. Ask which sites it applies to, then update, test and push each one.
 - Folders: on Hemang's Mac the repos sit side by side as `site/`, `lite-site/`, `sangeet-site/` (the docs use these names); on the Windows laptop they are `Hemang-riya/`, `riya-hemang-invite/`, `Hemang-riya-sangeet/`.
@@ -49,13 +49,14 @@ The couple sends each group of guests **one** link. There are **three separate c
 ## Riya's link (`/riya`), 19 Nov 2026
 
 **https://riya-hemang-invite.vercel.app/riya** is the same page for the guests Riya invites. Hemang: "she'll be sending the
-link to her guests, so we don't want their guests to reach out to us, and vice versa." The only difference is the contacts:
+link to her guests, so we don't want their guests to reach out to us, and vice versa." The differences are the contacts and the order of the two families in the countdown line:
 
 | | `/` | `/riya` |
 |---|---|---|
-| FAQ link under "Can't find the answer here?" | Reach out to Hemang or Harsh → calls Hemang | Reach out to Dharmesh or Kunj (ધર્મેશ અથવા કુંજનો સંપર્ક કરો) → calls Dharmesh |
-| "How do I RSVP?" answer, last line | Hemang (+91 97693 33516) or Harsh (+91 83698 94213) | Dharmesh Raval (+91 99988 70158) or Kunj Raval (+91 70169 06401) |
-| `CONTACTS` (also the on-site form's "Prefer to call?", unused while `RSVP_FORM_URL` is set) | Hemang, Harsh | Dharmesh Raval (Riya's dad), Kunj Raval (Riya's brother) |
+| Countdown line (`UI.*.eventLead`, from `FAMILIES`) | so please join the Bhanushalis & the Ravals... (તો ભાનુશાલી અને રાવલ પરિવાર સાથે જરૂર પધારજો...) | so please join the Ravals & the Bhanushalis... (તો રાવલ અને ભાનુશાલી પરિવાર સાથે જરૂર પધારજો...) |
+| FAQ link under "Can't find the answer here?" | Reach out to Hemang or Harsh → calls Hemang | Reach out to Mr. Dharmesh Kumar Raval and Kunj (શ્રી ધર્મેશકુમાર રાવલ અને કુંજનો સંપર્ક કરો) → calls him |
+| "How do I RSVP?" answer, last line | Hemang (+91 97693 33516) or Harsh (+91 83698 94213) | Mr. Dharmesh Kumar Raval (+91 99988 70158) or Kunj Raval (+91 70169 06401) |
+| `CONTACTS` (also the on-site form's "Prefer to call?", unused while `RSVP_FORM_URL` is set) | Hemang, Harsh | Mr. Dharmesh Kumar Raval (Riya's dad), Kunj Raval (Riya's brother) |
 
 Everything else is the same, RSVP included: every RSVP button opens the same main Google Form. That form's own
 description and thank-you message still name Hemang and Harsh (they come from `rsvp-form/CreateRsvpForms.gs`, outside the repos).
@@ -64,14 +65,20 @@ description and thank-you message still name Hemang and Harsh (they come from `r
 How it works: `vercel.json` rewrites `/riya` to `/` (not `/index.html`: with `cleanUrls` that redirects and the rewrite 404s),
 `trailingSlash: false` sends `/riya/` to `/riya`. In `app.js`, `RIYA` (top of CONTENT) picks the `CONTACTS` list and
 `UI.*.faqLink`; the FAQ's RSVP answer is built from `CONTACTS` (`CALL_US`), and the FAQ link calls `CONTACTS[0]`.
-A new text that names a contact must use `CONTACTS`, or have a `/riya` version. `tools/test/test-contacts.js` checks both links.
+A new text that names a contact must use `CONTACTS`, or have a `/riya` version. `tools/test/test-contacts.js` checks both links,
+including the family order in the countdown line.
+
+The countdown line (19 Nov 2026): Hemang asked for "something like with the Ravals and the Bhanushalis" and picked it in the big
+line (over a small line above it or a sign-off under the countdown). Each link names its own side first, like each family's own
+kankotri. Plural with no apostrophe: "the Ravals" is the Raval family ("Raval's" would mean "belonging to Raval").
+The page source's fallback text is the `/` order. The Gujarati needs a native speaker's proofread.
 
 ## Repo, hosting, preview
 
 - Repo: `HarshilForWork/riya-hemang-invite` (**private**, branch `main`), remote `git@github-personal:HarshilForWork/riya-hemang-invite.git` on Hemang's Mac (`https://github.com/HarshilForWork/riya-hemang-invite` on the Windows laptop), local git identity `HarshilForwork` (as on the main site; never the global work identity). Created 18 Nov 2026.
 - Live: **https://riya-hemang-invite.vercel.app**, a Vercel project Hemang imported himself (preset Other, no build command). Every push to `main` deploys. `vercel.json`, `robots.txt` and `.vercelignore` are the main site's (noindex; docs, tools and Markdown files are not served).
 - Preview locally: `python tools/serve.py 5182` (http.server plus the `/riya` rewrite; plain `python3 -m http.server 5182` works for `/` only). Then open http://localhost:5182/?lang=en and Riya's link http://localhost:5182/riya?lang=en.
-- Cache-busting: `styles.css?v=18`, `app.js?v=18` in `index.html` as of 19 Nov 2026. Bump on every change.
+- Cache-busting: `styles.css?v=18`, `app.js?v=19` in `index.html` as of 19 Nov 2026. Bump on every change.
 
 ## Keeping it in step with the main site
 

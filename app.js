@@ -20,6 +20,11 @@
   // Riya's link (/riya, see vercel.json): the same invite for Riya's guests, with her family as the contacts
   // (CONTACTS, the FAQ link and the RSVP answer) instead of Hemang and Harsh. Everything else is the same.
   const RIYA = location.pathname === "/riya" || location.pathname === "/riya/";
+  // The countdown line names both families, each side's own family first: Raval on Riya's link, Bhanushali on the main one.
+  // Plural with no apostrophe: "the Ravals" means the Raval family.
+  const FAMILIES = RIYA
+    ? { en: "the Ravals & the Bhanushalis", gu: "રાવલ અને ભાનુશાલી" }
+    : { en: "the Bhanushalis & the Ravals", gu: "ભાનુશાલી અને રાવલ" };
 
   // Static page text, matched to data-i18n="key" in index.html
   const UI = {
@@ -28,7 +33,7 @@
       navSangeet: "Sangeet", navWedding: "Wedding", navFaq: "FAQ", navRsvp: "RSVP",
       heroName: "Riya & Hemang", heroPrompt: "Scroll to explore",
       storyIntro: "a few moments that led us here...", storyTitle: "our love story",
-      eventLead: "so please join us...", eventDate: "january 22 & 27, 2027",
+      eventLead: `so please join ${FAMILIES.en}...`, eventDate: "january 22 & 27, 2027",
       cdDays: "Days", cdHours: "Hours", cdMinutes: "Minutes", cdSeconds: "Seconds", until: "until the wedding",
       sangeetKicker: "The Sangeet", sangeetDate: "Friday, 22 January 2027", time: "6:00 PM onwards",
       sangeetVenue: "Bhanushali Wadi, Nerul", sangeetAddr: "Basveshewar Maharaj Marg, Sector 19A, Nerul East, Navi Mumbai 400706",
@@ -57,7 +62,7 @@
       navSangeet: "સંગીત", navWedding: "લગ્ન", navFaq: "પ્રશ્નો", navRsvp: "હાજરી જણાવો",
       heroName: "રિયા & હેમાંગ", heroPrompt: "આગળ જોવા સ્ક્રોલ કરો",
       storyIntro: "થોડી પળો, જે અમને અહીં સુધી લાવી...", storyTitle: "અમારી પ્રેમકહાણી",
-      eventLead: "તો જરૂર પધારજો...", eventDate: "૨૨ અને ૨૭ જાન્યુઆરી, ૨૦૨૭",
+      eventLead: `તો ${FAMILIES.gu} પરિવાર સાથે જરૂર પધારજો...`, eventDate: "૨૨ અને ૨૭ જાન્યુઆરી, ૨૦૨૭",
       cdDays: "દિવસ", cdHours: "કલાક", cdMinutes: "મિનિટ", cdSeconds: "સેકન્ડ", until: "લગ્નના શુભ દિવસ સુધી",
       sangeetKicker: "સંગીત સંધ્યા", sangeetDate: "શુક્રવાર, ૨૨ જાન્યુઆરી ૨૦૨૭", time: "સાંજે ૬:૦૦ વાગ્યાથી",
       sangeetVenue: "ભાનુશાલી વાડી, નેરુલ", sangeetAddr: "બસવેશ્વર મહારાજ માર્ગ, સેક્ટર ૧૯એ, નેરુલ ઈસ્ટ, નવી મુંબઈ ૪૦૦૭૦૬",
@@ -136,15 +141,15 @@
 
   // Who guests can call or WhatsApp. Riya's link sends her guests to her family, the main link to Hemang's.
   const CONTACTS = RIYA ? [
-    { en: "Dharmesh Raval", gu: "ધર્મેશ રાવલ", tel: "+919998870158", display: "+91 99988 70158" },
+    { en: "Mr. Dharmesh Kumar Raval", gu: "શ્રી ધર્મેશકુમાર રાવલ", tel: "+919998870158", display: "+91 99988 70158" },
     { en: "Kunj Raval", gu: "કુંજ રાવલ", tel: "+917016906401", display: "+91 70169 06401" },
   ] : [
     { en: "Hemang", gu: "હેમાંગ", tel: "+919769333516", display: "+91 97693 33516" },
     { en: "Harsh", gu: "હર્ષ", tel: "+918369894213", display: "+91 83698 94213" },
   ];
   if (RIYA) {
-    UI.en.faqLink = "Reach out to Dharmesh or Kunj";
-    UI.gu.faqLink = "ધર્મેશ અથવા કુંજનો સંપર્ક કરો";
+    UI.en.faqLink = "Reach out to Mr. Dharmesh Kumar Raval and Kunj";
+    UI.gu.faqLink = "શ્રી ધર્મેશકુમાર રાવલ અને કુંજનો સંપર્ક કરો";
   }
   // "Reach out to …" under the FAQ title calls the first contact
   $$(".faq__link").forEach((a) => (a.href = `tel:${CONTACTS[0].tel}`));
