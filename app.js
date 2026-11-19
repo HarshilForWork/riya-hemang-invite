@@ -17,9 +17,13 @@
      CONTENT — edit here. Every text has an English (en) and Gujarati (gu) version.
      ========================================================= */
 
-  // Riya's link (/riya, see vercel.json): the same invite for Riya's guests, with her family as the contacts
-  // (CONTACTS, the FAQ link and the RSVP answer) instead of Hemang and Harsh. Everything else is the same.
-  const RIYA = location.pathname === "/riya" || location.pathname === "/riya/";
+  // Riya's links (see vercel.json), the same invite for Riya's guests:
+  // /riya: her family as the contacts (CONTACTS, the FAQ link and the RSVP answer) instead of Hemang and Harsh.
+  // /riyaguests (19 Nov 2026): no RSVP and no contacts at all (no RSVP button, section, card or FAQ, no "Reach out to …").
+  // Everything else is the same.
+  const PATH = location.pathname.replace(/\/+$/, "");
+  const NO_RSVP = PATH === "/riyaguests";
+  const RIYA = PATH === "/riya" || NO_RSVP; // Riya's side: her family's contacts, and the Ravals first in the countdown line
   // The countdown line names both families, each side's own family first: Raval on Riya's link, Bhanushali on the main one.
   // Plural with no apostrophe: "the Ravals" means the Raval family.
   const FAMILIES = RIYA
@@ -153,6 +157,13 @@
   }
   // "Reach out to …" under the FAQ title calls the first contact
   $$(".faq__link").forEach((a) => (a.href = `tel:${CONTACTS[0].tel}`));
+  // /riyaguests: take the RSVP and contact pieces out of the page before anything is measured or animated
+  if (NO_RSVP) {
+    document.documentElement.dataset.rsvp = "off";
+    $("#rsvp-callout-section").remove();
+    $$(".nav .btn-rsvp").forEach((b) => (b.closest("li") || b).remove());
+    $$(".faq__help, .faq__link").forEach((el) => el.remove());
+  }
   // last line of the RSVP answer in the FAQ: the same people as CONTACTS
   const CALL_US = {
     en: `You can also call or text ${CONTACTS.map((c) => `${c.en} (${c.display})`).join(" or ")}.`,
@@ -324,6 +335,21 @@
       stayTitle: "આપ ક્યાં રોકાશો", stayCta: "હાજરીના ફોર્મમાં જણાવો", rsvpCta: "હાજરી જણાવો",
     },
   };
+
+  // /riyaguests has no RSVP form and no contacts: drop "How do I RSVP?" (both languages, so Mix lines up) and
+  // don't point guests to the form or ask them to tell us anything
+  if (NO_RSVP) {
+    const TRAVEL_ANSWER = {
+      en: "Yes. Travel & Stay lists suggested trains for 26 and 27 January, and we've planned a stay in Nadiad for guests coming from Mumbai.",
+      gu: "હા. 'પ્રવાસ અને રોકાણ'માં ૨૬ અને ૨૭ જાન્યુઆરીની સૂચવેલી ટ્રેનો છે, અને મુંબઈથી આવતા મહેમાનો માટે અમે નડિયાદમાં રહેવાની વ્યવસ્થા કરી છે.",
+    };
+    for (const l of ["en", "gu"]) {
+      FAQ[l] = FAQ[l].filter(([q]) => !/RSVP|હાજરી/.test(q));
+      FAQ[l].forEach((f) => { if (/RSVP|હાજરી/.test(f[1].join(" "))) f[1] = [TRAVEL_ANSWER[l]]; });
+    }
+    FORM.en.stayPlan = "We've planned a stay in Nadiad for guests coming from Mumbai, and we'll share the details with you closer to the date.";
+    FORM.gu.stayPlan = "મુંબઈથી આવતા મહેમાનો માટે અમે નડિયાદમાં રહેવાની વ્યવસ્થા કરી છે — વિગતો અમે તારીખ નજીક આવતા આપને મોકલીશું.";
+  }
 
   // Wedding: 2027-01-27 18:00 IST (UTC+5:30)
   const COUNTDOWN_TARGET = Date.UTC(2027, 0, 27, 12, 30, 0);
@@ -855,7 +881,7 @@
   const plusSvg = `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>`;
   let gridBuilt = false;
   function buildGrid() {
-    $("#detailsGrid").innerHTML = CARDS.map((c, i) => {
+    $("#detailsGrid").innerHTML = (NO_RSVP ? CARDS.filter((c) => c.id !== "rsvp") : CARDS).map((c, i) => {
       const [title, sub] = c[tl()];
       const accent = mix() && c.gu[0] !== c.en[0] ? `<span class="accent accent--card">${esc(c.gu[0])}</span>` : "";
       return `
@@ -980,7 +1006,7 @@
         <p class="op__label">${esc(F("stayTitle"))}</p>
         <p class="op__sub">${esc(F("secStay"))}</p>
         <div class="op__body"><p>${esc(F("stayPlan"))}</p></div>
-        <button class="btn-pill op__mapbtn" data-overlay="rsvp">${esc(F("rsvpCta"))}</button>
+        ${NO_RSVP ? "" : `<button class="btn-pill op__mapbtn" data-overlay="rsvp">${esc(F("rsvpCta"))}</button>`}
       </div>`;
   }
 
@@ -1155,7 +1181,8 @@
     const t = e.target.closest("[data-overlay]");
     if (!t) return;
     e.preventDefault();
-    // every RSVP button (nav, callout, RSVP card, Travel & Stay) opens the couple's Google Form
+    // every RSVP button (nav, callout, RSVP card, Travel & Stay) opens the couple's Google Form; /riyaguests has none
+    if (t.dataset.overlay === "rsvp" && NO_RSVP) return;
     if (t.dataset.overlay === "rsvp" && RSVP_FORM_URL) { window.open(RSVP_FORM_URL, "_blank", "noopener"); return; }
     openSheet(t.dataset.overlay);
   });

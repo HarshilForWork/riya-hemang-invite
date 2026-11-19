@@ -1,8 +1,9 @@
-"""Local server for this site: Python's http.server plus the one rewrite in vercel.json.
+"""Local server for this site: Python's http.server plus the rewrites in vercel.json.
 
     python tools/serve.py [port]      (default 5182; works from any folder)
 
-Like on Vercel, /riya serves index.html (Riya's link: her family as the contacts), and /riya/ redirects to /riya
+Like on Vercel, /riya and /riyaguests serve index.html (Riya's links: /riya has her family as the contacts,
+/riyaguests has no RSVP and no contacts), and a trailing slash redirects (/riya/ to /riya)
 (vercel.json has "trailingSlash": false). Everything else is plain http.server.
 """
 import functools
@@ -12,7 +13,7 @@ import sys
 import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-REWRITES = {"/riya": "/index.html"}  # keep in step with "rewrites" in vercel.json
+REWRITES = {"/riya": "/index.html", "/riyaguests": "/index.html"}  # keep in step with "rewrites" in vercel.json
 
 
 class Handler(http.server.SimpleHTTPRequestHandler):
@@ -47,5 +48,5 @@ class Server(http.server.ThreadingHTTPServer):
 if __name__ == "__main__":
     port = int(sys.argv[1]) if len(sys.argv) > 1 else 5182
     server = Server(("", port), functools.partial(Handler, directory=ROOT))
-    print(f"Serving {ROOT} on http://localhost:{port}/  (Riya's link: http://localhost:{port}/riya)")
+    print(f"Serving {ROOT} on http://localhost:{port}/  (Riya's links: http://localhost:{port}/riya and /riyaguests)")
     server.serve_forever()

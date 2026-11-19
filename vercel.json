@@ -2,7 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "rewrites": [{ "source": "/riya", "destination": "/" }],
+  "rewrites": [
+    { "source": "/riya", "destination": "/" },
+    { "source": "/riyaguests", "destination": "/" }
+  ],
   "headers": [
     {
       "source": "/assets/(.*)",
