@@ -4,6 +4,7 @@
 
 | Decision | Reason / who decided |
 |---|---|
+| No FAQ and no wedding hashtag on any site (22 Nov 2026): FAQ section, nav link, #RiyaSangHemang card/pop-up, footer tag and page-description hashtag removed; the "Reach out to …" link moved under the RSVP button; detail cards now centre a short last row | Hemang: "I don't need Q&A… there's no hashtag" |
 | No R&H / HR monogram anywhere: the nav has no logo, just the links, centred (RSVP alone at the top right on phones). The full names "Riya & Hemang" are fine where they already appear | The couple looked at every logo option (19 Nov 2026) and decided against initials |
 | Rebuild the Cordially "origins" demo (jim-pam.cordially.io) as the base, then replace all content | Hemang wanted that look and scroll animation |
 | Hero photo = 37 (Toronto streetcar) | Hemang's choice (replaced the twirl photo 30) |

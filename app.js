@@ -18,8 +18,8 @@
      ========================================================= */
 
   // Riya's links (see vercel.json), the same invite for Riya's guests:
-  // /riya: her family as the contacts (CONTACTS, the FAQ link and the RSVP answer) instead of Hemang and Harsh.
-  // /riyaguests (19 Nov 2026): no RSVP and no contacts at all (no RSVP button, section, card or FAQ, no "Reach out to …").
+  // /riya: her family as the contacts (CONTACTS and the "Reach out to …" link under the RSVP button) instead of Hemang and Harsh.
+  // /riyaguests (19 Nov 2026): no RSVP and no contacts at all (no RSVP button, section or card, no "Reach out to …").
   // Everything else is the same.
   const PATH = location.pathname.replace(/\/+$/, "");
   const NO_RSVP = PATH === "/riyaguests";
@@ -34,7 +34,7 @@
   const UI = {
     en: {
       intro: "welcome to the story of...", introCta: "scroll to begin",
-      navSangeet: "Sangeet", navWedding: "Wedding", navFaq: "FAQ", navRsvp: "RSVP",
+      navSangeet: "Sangeet", navWedding: "Wedding", navRsvp: "RSVP",
       heroName: "Riya & Hemang", heroPrompt: "Scroll to explore",
       storyIntro: "a few moments that led us here...", storyTitle: "our love story",
       eventLead: `so please join ${FAMILIES.en}...`, eventDate: "january 22 & 27, 2027",
@@ -47,8 +47,7 @@
       detailsTitle: "and now some additional details...",
       detailsSub: "Two cities, two celebrations, and everything you need to be there for both.",
       vision: "Two very different people — one who plans everything, one who plans nothing at all — are doing the rest of it together.",
-      faqTitle: "Questions and answers", faqHelp: "Can't find the answer here?", faqLink: "Reach out to Hemang or Harsh",
-      faqOutro: "We cannot wait to celebrate with you.",
+      faqLink: "Reach out to Hemang or Harsh",
       footerQuote: "from a concert in Toronto to a mandap in Nadiad.",
       // used inside pop-ups
       call: "Call", whatsapp: "WhatsApp", rsvpContact: "RSVP contact", openMaps: "Open in Google Maps", mapTitle: "Map to the venue",
@@ -63,7 +62,7 @@
     },
     gu: {
       intro: "આપનું સ્વાગત છે, આ કહાણી છે...", introCta: "શરૂ કરવા સ્ક્રોલ કરો",
-      navSangeet: "સંગીત", navWedding: "લગ્ન", navFaq: "પ્રશ્નો", navRsvp: "હાજરી જણાવો",
+      navSangeet: "સંગીત", navWedding: "લગ્ન", navRsvp: "હાજરી જણાવો",
       heroName: "રિયા & હેમાંગ", heroPrompt: "આગળ જોવા સ્ક્રોલ કરો",
       storyIntro: "થોડી પળો, જે અમને અહીં સુધી લાવી...", storyTitle: "અમારી પ્રેમકહાણી",
       eventLead: `તો ${FAMILIES.gu} પરિવાર સાથે જરૂર પધારજો...`, eventDate: "૨૨ અને ૨૭ જાન્યુઆરી, ૨૦૨૭",
@@ -76,8 +75,7 @@
       detailsTitle: "અને હવે થોડી વધુ વિગતો...",
       detailsSub: "બે શહેર, બે ઉજવણી — અને બંનેમાં હાજર રહેવા માટે જરૂરી બધી માહિતી.",
       vision: "બે સાવ અલગ સ્વભાવના લોકો — એક જે બધું જ પ્લાન કરે, અને એક જે કંઈ જ પ્લાન ન કરે — હવે બાકીનું જીવન સાથે વિતાવશે.",
-      faqTitle: "પ્રશ્નો અને જવાબો", faqHelp: "અહીં જવાબ ન મળ્યો?", faqLink: "હેમાંગ અથવા હર્ષનો સંપર્ક કરો",
-      faqOutro: "આપની સાથે ઉજવણી કરવા અમે આતુર છીએ.",
+      faqLink: "હેમાંગ અથવા હર્ષનો સંપર્ક કરો",
       footerQuote: "ટોરોન્ટોના એક કોન્સર્ટથી નડિયાદના મંડપ સુધી.",
       call: "ફોન કરો", whatsapp: "વૉટ્સએપ", rsvpContact: "સંપર્ક", openMaps: "Google Maps માં ખોલો", mapTitle: "સ્થળનો નકશો",
       rsvpListLabel: "સંપર્ક કરો ત્યારે", rsvpListSub: "કૃપા કરીને જણાવશો",
@@ -103,7 +101,6 @@
     rsvp: "આપની હાજરી જણાવશો",
     details: "થોડી વધુ વિગતો",
     vision: "એક જે બધું પ્લાન કરે, એક જે કંઈ પ્લાન ન કરે — હવે સાથે",
-    faq: "પ્રશ્નો અને જવાબો",
     footer: "ટોરોન્ટોથી નડિયાદ સુધી",
   };
 
@@ -155,20 +152,15 @@
     UI.en.faqLink = "Reach out to Mr. Dharmesh Kumar Raval and Kunj";
     UI.gu.faqLink = "શ્રી ધર્મેશકુમાર રાવલ અને કુંજનો સંપર્ક કરો";
   }
-  // "Reach out to …" under the FAQ title calls the first contact
-  $$(".faq__link").forEach((a) => (a.href = `tel:${CONTACTS[0].tel}`));
+  // "Reach out to …" under the RSVP button calls the first contact
+  $$(".contact-link").forEach((a) => (a.href = `tel:${CONTACTS[0].tel}`));
   // /riyaguests: take the RSVP and contact pieces out of the page before anything is measured or animated
   if (NO_RSVP) {
     document.documentElement.dataset.rsvp = "off";
     $("#rsvp-callout-section").remove();
     $$(".nav .btn-rsvp").forEach((b) => (b.closest("li") || b).remove());
-    $$(".faq__help, .faq__link").forEach((el) => el.remove());
+    $$(".contact-link").forEach((el) => el.remove());
   }
-  // last line of the RSVP answer in the FAQ: the same people as CONTACTS
-  const CALL_US = {
-    en: `You can also call or text ${CONTACTS.map((c) => `${c.en} (${c.display})`).join(" or ")}.`,
-    gu: `આપ ${CONTACTS.map((c) => `${c.gu} (${c.display})`).join(" અથવા ")} ને ફોન કે મેસેજ પણ કરી શકો છો.`,
-  };
   const mapsEmbed = (q) => `https://maps.google.com/maps?q=${encodeURIComponent(q)}&output=embed`;
   const mapsLink = (q) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 
@@ -177,7 +169,6 @@
     { id: "wedding", en: ["Wedding", "Wednesday, 27 January · Nadiad"], gu: ["લગ્ન", "બુધવાર, ૨૭ જાન્યુઆરી · નડિયાદ"] },
     { id: "travel", en: ["Travel & Stay", "Trains from Mumbai and your stay in Nadiad."], gu: ["પ્રવાસ અને રોકાણ", "મુંબઈથી ટ્રેનો અને નડિયાદમાં રોકાણ."] },
     { id: "rsvp", en: ["RSVP", "Attendance, travel and stay in one form."], gu: ["હાજરી જણાવો", "હાજરી, મુસાફરી અને રોકાણ — એક જ ફોર્મમાં."] },
-    { id: "hashtag", en: ["#RiyaSangHemang", "Share every moment with us."], gu: ["#RiyaSangHemang", "દરેક પળ અમારી સાથે શેર કરો."] },
     { id: "more", en: ["More to come", "Other celebrations, shared soon."], gu: ["હજી ઘણું બાકી છે", "બીજા પ્રસંગોની વિગતો ટૂંક સમયમાં."] },
   ];
 
@@ -226,16 +217,6 @@
       en: { title: "RSVP", description: "Please let us know who's coming, and whether you'd like help with travel or a stay in Nadiad." },
       gu: { title: "હાજરી જણાવો", description: "કોણ પધારશે, અને મુસાફરી કે નડિયાદમાં રહેવાની મદદ જોઈએ છે કે નહીં, તે જણાવશો." },
     },
-    hashtag: {
-      en: {
-        title: "#RiyaSangHemang", description: "Snap, post and tag — we'd love to see both celebrations through your eyes.",
-        sections: [["Our hashtag", "#RiyaSangHemang", "Use it on Instagram, WhatsApp statuses and anywhere else you share photos from the Sangeet and the wedding."]],
-      },
-      gu: {
-        title: "#RiyaSangHemang", description: "ફોટો પાડો, પોસ્ટ કરો અને ટૅગ કરો — બંને ઉજવણી આપની નજરે જોવી અમને ગમશે.",
-        sections: [["અમારો હેશટૅગ", "#RiyaSangHemang", "સંગીત અને લગ્નના ફોટા ઇન્સ્ટાગ્રામ, વૉટ્સએપ સ્ટેટસ કે બીજે ક્યાંય પણ શેર કરો ત્યારે આ હેશટૅગ વાપરજો."]],
-      },
-    },
     more: {
       en: {
         title: "More to come", description: "The Sangeet and the wedding are just the beginning.",
@@ -248,18 +229,6 @@
     },
   };
 
-  const FAQ = {
-    en: [
-      ["How do I RSVP?", ["Tap RSVP at the top of this page and fill in the short form. It also asks about travel and accommodation.", CALL_US.en]],
-      ["I'm travelling from Mumbai to Nadiad. Can you help?", ["Yes. Travel & Stay lists suggested trains for 26 and 27 January, and the RSVP form lets you ask for help with tickets and a stay in Nadiad."]],
-      ["Do you have a wedding hashtag?", ["Yes! Please share your photos with #RiyaSangHemang."]],
-    ],
-    gu: [
-      ["હાજરી કેવી રીતે જણાવું?", ["આ પેજની ઉપર 'હાજરી જણાવો' પર ટૅપ કરીને નાનું ફોર્મ ભરો. તેમાં મુસાફરી અને રોકાણ વિશે પણ પૂછ્યું છે.", CALL_US.gu]],
-      ["હું મુંબઈથી નડિયાદ આવું છું. મદદ મળશે?", ["હા. 'પ્રવાસ અને રોકાણ'માં ૨૬ અને ૨૭ જાન્યુઆરીની સૂચવેલી ટ્રેનો છે, અને હાજરીના ફોર્મમાં ટિકિટ તથા નડિયાદમાં રોકાણ માટે મદદ માગી શકો છો."]],
-      ["લગ્નનો કોઈ હેશટૅગ છે?", ["હા! આપના ફોટા #RiyaSangHemang સાથે શેર કરજો."]],
-    ],
-  };
 
   // Suggested trains Mumbai -> Nadiad (ND). Times from the Indian Railways timetable as listed on
   // ConfirmTkt and ixigo in November 2026; guests are asked to confirm on IRCTC when booking.
@@ -339,14 +308,6 @@
   // /riyaguests has no RSVP form and no contacts: drop "How do I RSVP?" (both languages, so Mix lines up) and
   // don't point guests to the form or ask them to tell us anything
   if (NO_RSVP) {
-    const TRAVEL_ANSWER = {
-      en: "Yes. Travel & Stay lists suggested trains for 26 and 27 January, and we've planned a stay in Nadiad for guests coming from Mumbai.",
-      gu: "હા. 'પ્રવાસ અને રોકાણ'માં ૨૬ અને ૨૭ જાન્યુઆરીની સૂચવેલી ટ્રેનો છે, અને મુંબઈથી આવતા મહેમાનો માટે અમે નડિયાદમાં રહેવાની વ્યવસ્થા કરી છે.",
-    };
-    for (const l of ["en", "gu"]) {
-      FAQ[l] = FAQ[l].filter(([q]) => !/RSVP|હાજરી/.test(q));
-      FAQ[l].forEach((f) => { if (/RSVP|હાજરી/.test(f[1].join(" "))) f[1] = [TRAVEL_ANSWER[l]]; });
-    }
     FORM.en.stayPlan = "We've planned a stay in Nadiad for guests coming from Mumbai, and we'll share the details with you closer to the date.";
     FORM.gu.stayPlan = "મુંબઈથી આવતા મહેમાનો માટે અમે નડિયાદમાં રહેવાની વ્યવસ્થા કરી છે — વિગતો અમે તારીખ નજીક આવતા આપને મોકલીશું.";
   }
@@ -868,7 +829,7 @@
   // Files in assets/stock/ (Unsplash License: free, no credit required; sources in docs/04-photos.md).
   // "More to come" is a collage of other ceremonies: haldi, mehndi, garba (dandiya), bangles.
   const CARD_ART = {
-    sangeet: ["sangeet"], wedding: ["wedding"], travel: ["travel"], rsvp: ["rsvp"], hashtag: ["hashtag"],
+    sangeet: ["sangeet"], wedding: ["wedding"], travel: ["travel"], rsvp: ["rsvp"],
     more: ["more-haldi", "more-mehndi", "more-dandiya", "more-bangles"],
   };
   // where to crop a photo when the box is wider than the photo (default: centre)
@@ -895,23 +856,6 @@
     }).join("");
     if (!gridBuilt) $$("#detailsGrid [data-reveal]").forEach((el) => io.observe(el));
     gridBuilt = true;
-  }
-
-  /* ---------------- FAQ ---------------- */
-  const chevron = `<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>`;
-  function buildFaq() {
-    const list = $("#faqList");
-    list.innerHTML = FAQ[tl()].map(([q, a], i) => `
-      <div class="faq__item">
-        <button class="faq__q" aria-expanded="false" aria-controls="faq-a-${i}"><span>${esc(q)}${mix() ? `<small class="accent accent--faq">${esc(FAQ.gu[i][0])}</small>` : ""}</span><i class="faq__icon">${chevron}</i></button>
-        <div class="faq__a" id="faq-a-${i}" role="region"><div>${a.map((p) => `<p>${esc(p)}</p>`).join("")}</div></div>
-      </div>`).join("");
-    $$(".faq__q", list).forEach((b) => b.addEventListener("click", () => {
-      const item = b.parentElement;
-      const open = !item.classList.contains("is-open");
-      item.classList.toggle("is-open", open);
-      b.setAttribute("aria-expanded", open);
-    }));
   }
 
   /* ---------------- SHEET (overlay pages) ---------------- */
@@ -1214,7 +1158,6 @@
     buildStory();
     layoutStory();
     buildGrid();
-    buildFaq();
     renderSheet();
     applyFocus();
     tick();

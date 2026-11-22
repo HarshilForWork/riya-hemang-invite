@@ -1,7 +1,7 @@
 // Riya's guests link without RSVP or contacts (/riyaguests, 19 Nov 2026). In English, Gujarati and Mix, on the page and
-// in every pop-up: no RSVP button, section, card, FAQ or form link, and no contacts at all (no names, numbers,
-// "Reach out to …", tel: or WhatsApp links). The countdown line names the Ravals first, like /riya. Five detail cards
-// (no RSVP card), two FAQs (no "How do I RSVP?"), no nav on phones (it would show a bare "FAQ").
+// in every pop-up: no RSVP button, section, card or form link, and no contacts at all (no names, numbers,
+// "Reach out to …", tel: or WhatsApp links). The countdown line names the Ravals first, like /riya. Four detail cards
+// (no RSVP card; no hashtag card or FAQ since 22 Nov 2026), no nav on phones (it would be empty).
 // node tools/test/cdp-test.mjs "http://localhost:5182/riyaguests?lang=en" 390 664 1 tools/test/test-no-rsvp.js
 // (/riyaguests needs tools/serve.py locally; plain http.server can't serve it)
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -16,12 +16,10 @@ document.getElementById("intro").click();
 await wait(400);
 const opened = []; const realOpen = window.open;
 window.open = (url) => { opened.push(url); return null; };
-const out = { path: location.pathname, rsvpLeaks: [], contactLeaks: [], badLinks: [], cards: {}, faqs: {}, familyLine: {}, familyLineWrong: [], travelStay: {} };
+const out = { path: location.pathname, rsvpLeaks: [], contactLeaks: [], badLinks: [], cards: {}, familyLine: {}, familyLineWrong: [], travelStay: {} };
 for (const l of ["en", "gu", "mix"]) {
   $("#langToggle").click(); await wait(60); $(`[data-lang="${l}"]`).click(); await wait(300);
-  $$(".faq__item").forEach((i) => i.classList.add("is-open"));
   out.cards[l] = $$("button.dcard[data-overlay]").map((b) => b.dataset.overlay).join(",");
-  out.faqs[l] = $$(".faq__q").map((q) => q.textContent.trim());
   let text = document.body.innerText;
   let links = $$("a[href]").map((a) => a.getAttribute("href"));
   for (const b of $$("button.dcard[data-overlay]")) {
@@ -44,7 +42,7 @@ $("#langToggle").click(); await wait(60); $('[data-lang="en"]').click(); await w
 // anything still wired to the RSVP form does nothing here
 $$('[data-overlay="rsvp"]').forEach((el) => el.click());
 await wait(300);
-out.rsvpElements = $$('[data-overlay="rsvp"], #rsvp-callout-section, .btn-rsvp, .faq__link, .faq__help').length;
+out.rsvpElements = $$('[data-overlay="rsvp"], #rsvp-callout-section, .btn-rsvp, .contact-link').length;
 out.windowOpenCalls = opened;
 out.sheetOpenAfterRsvpClicks = $("#sheet") ? $("#sheet").classList.contains("is-open") : false;
 window.open = realOpen;
