@@ -246,9 +246,10 @@
     ],
   };
 
-  // RSVPs go to the couple's Google Form (Hemang, 18 Nov 2026): every RSVP button opens it in a new tab.
+  // RSVPs go to the couple's Google Form (Hemang, 18 Nov 2026; since 22 Nov 2026 the English + Gujarati one,
+  // without the hashtag): every RSVP button opens it in a new tab.
   // Empty it to bring back the on-site form below.
-  const RSVP_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSeD4dAbMXjewzgOCTjrC5tQziNs-6SC6AavZFkumD1hL90rlg/viewform";
+  const RSVP_FORM_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd13AnCmbMxVDlggEo_ayRcUrIvbRRnLAtqrAqA1T7W45hUyw/viewform";
   // On-site form (unused while RSVP_FORM_URL is set). Optional: paste a Google Apps Script web-app URL here
   // to also collect its RSVPs in a Google Sheet (see docs/rsvp-google-sheet.md); when empty they go to Hemang on WhatsApp.
   const RSVP_ENDPOINT = "";
