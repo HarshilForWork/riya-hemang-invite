@@ -129,12 +129,12 @@
       side: "left", photos: [1, 22, 17, 7, 32],
       tags: [null, null, null, null, "#SheSaidYes"],
       en: {
-        title: "our story, the short version",
+        title: "our story",
         body: "A concert in Toronto brought us together. One year and many adventures later, he asked, and she said yes.",
         caps: ["Where it all began", "Fall colours, up north", "Off-roading, birthday edition", "Niagara Falls", ""],
       },
       gu: {
-        title: "અમારી કહાણી, ટૂંકમાં",
+        title: "અમારી કહાણી",
         body: "ટોરોન્ટોના એક કોન્સર્ટે અમને મેળવ્યા. એક વર્ષ અને ઘણાં સાહસો પછી, તેણે પૂછ્યું અને તેણે હા પાડી.",
         caps: ["જ્યાંથી બધું શરૂ થયું", "ઉત્તરમાં પાનખરના રંગો", "બર્થડે સ્પેશિયલ ઑફ-રોડિંગ", "નાયગ્રા ફૉલ્સ", ""],
       },
