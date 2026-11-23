@@ -41,15 +41,15 @@ The couple sends each group of guests **one** link. There are **three separate c
 
 ## What's different from the main site (as of 18 Nov 2026)
 
-- Story: one short chapter, "our story, the short version", with 3 photos (1, 16, 32 with #SheSaidYes),
-  instead of 5 chapters and 30 photos.
+- Story: one short chapter, "our story, the short version", with 5 photos (1, 22 "Fall colours, up north", 17 "Off-roading, birthday edition", 7 "Niagara Falls", 32 with #SheSaidYes; 22, 17, 7 replaced 16 "Adventures, together" on 23 Nov 2026),
+  instead of 5 chapters and 30 photos. Its line (23 Nov 2026, Hemang chose option C; no hot chocolate, "not a milestone"): "A concert in Toronto brought us together. One year and many adventures later, he asked, and she said yes." (ટોરોન્ટોના એક કોન્સર્ટે અમને મેળવ્યા. એક વર્ષ અને ઘણાં સાહસો પછી, તેણે પૂછ્યું અને તેણે હા પાડી.)
 - No big "Two very different people…" text block (the `#vision` section is removed).
 - Detail cards: all six, same as the main site (Sangeet, Wedding, Travel & Stay, RSVP, #RiyaSangHemang,
   More to come). Hemang first had them trimmed to two, then asked for all of them back.
 - No closing quote section ("from a concert in Toronto to a mandap in Nadiad"): the `#footer` section
   is removed; the page ends with the FAQ's "We cannot wait to celebrate with you."
 - FAQ: 3 questions (RSVP, travel from Mumbai, hashtag). The dietary-needs question was removed.
-- Couple photos not used here were removed from `assets/rh/` (hero 37, 68, 54, 52, 5; story 1, 16, 32);
+- Couple photos not used here were removed from `assets/rh/` (hero 37, 68, 54, 52, 5; story 1, 22, 17, 7, 32);
   `PHOTOS` regenerated.
 - `tools/test/test-audit.js` checks whichever detail cards exist.
 - Page length on a phone: about 12 screens (main site: about 29).
@@ -114,7 +114,7 @@ five cards, two FAQs, the Ravals first, the last row centred, and no nav on phon
 
 This is a copy, not shared code. When the main site changes (RSVP link, contacts, photos, wording, bug fixes), ask Hemang whether the short invite should change too, and apply it here by hand. Keep what's deliberately different (listed above). Test with the same harness, pointing at port 5182 or the live URL:
 ```bash
-node tools/test/cdp-test.mjs "https://riya-hemang-invite.vercel.app/?lang=en" 390 664 1 tools/test/test-story.js   # expect 3 photos, 1 hashtag, 1 chapter
+node tools/test/cdp-test.mjs "https://riya-hemang-invite.vercel.app/?lang=en" 390 664 1 tools/test/test-story.js   # expect 5 photos, 1 hashtag, 1 chapter
 node tools/test/cdp-test.mjs "https://riya-hemang-invite.vercel.app/?lang=en" 390 664 1 tools/test/test-rsvp.js    # all RSVP buttons open the Google Form
 node tools/test/cdp-test.mjs "https://riya-hemang-invite.vercel.app/riya?lang=en" 390 664 1 tools/test/test-contacts.js   # Riya's family, no Hemang/Harsh; on / the reverse
 ```

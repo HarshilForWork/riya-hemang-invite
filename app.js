@@ -109,7 +109,9 @@
   const PHOTOS = {
     1: [1200, 1600, 0.12, 0.311, 0.831, 0.635],
     5: [1200, 1600, 0.289, 0.225, 0.629, 0.429],
-    16: [1200, 1600, 0.477, 0.158, 0.656, 0.33],
+    7: [1200, 1600, 0.41, 0.385, 0.615, 0.519],
+    17: [1067, 1600, 0.117, 0.196, 0.603, 0.374],
+    22: [1600, 1200, 0.304, 0.264, 0.614, 0.688],
     32: [1066, 1600, 0.196, 0.563, 0.763, 0.705],
     37: [1600, 1066, 0.225, 0.31, 0.807, 0.667],
     52: [1200, 1600, 0.434, 0.43, 0.705, 0.598],
@@ -124,17 +126,17 @@
   // shape, so nothing is ever cropped.
   const STORY = [
     {
-      side: "left", photos: [1, 16, 32],
-      tags: [null, null, "#SheSaidYes"],
+      side: "left", photos: [1, 22, 17, 7, 32],
+      tags: [null, null, null, null, "#SheSaidYes"],
       en: {
         title: "our story, the short version",
-        body: "We met at a concert in Toronto, had our first hot chocolate on our second date, and spent a year collecting firsts. Then one November afternoon he got down on one knee — and she said yes.",
-        caps: ["Where it all began", "Adventures, together", ""],
+        body: "A concert in Toronto brought us together. One year and many adventures later, he asked, and she said yes.",
+        caps: ["Where it all began", "Fall colours, up north", "Off-roading, birthday edition", "Niagara Falls", ""],
       },
       gu: {
         title: "અમારી કહાણી, ટૂંકમાં",
-        body: "અમે ટોરોન્ટોમાં એક કોન્સર્ટમાં મળ્યા, બીજી ડેટ પર પહેલી હોટ ચોકલેટ પીધી, અને એક વર્ષ સુધી ઘણી 'પહેલી વાર' ભેગી કરી. પછી નવેમ્બરની એક બપોરે તેણે ઘૂંટણિયે બેસીને પૂછ્યું — અને તેણે હા પાડી.",
-        caps: ["જ્યાંથી બધું શરૂ થયું", "સાથે સાથે સફર", ""],
+        body: "ટોરોન્ટોના એક કોન્સર્ટે અમને મેળવ્યા. એક વર્ષ અને ઘણાં સાહસો પછી, તેણે પૂછ્યું અને તેણે હા પાડી.",
+        caps: ["જ્યાંથી બધું શરૂ થયું", "ઉત્તરમાં પાનખરના રંગો", "બર્થડે સ્પેશિયલ ઑફ-રોડિંગ", "નાયગ્રા ફૉલ્સ", ""],
       },
     },
   ];
