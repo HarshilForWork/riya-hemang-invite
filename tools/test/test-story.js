@@ -32,7 +32,7 @@ for (let d = 0; d <= st.offsetHeight - innerHeight - 60; d += 150) {
   scrollTo(0, st.offsetTop + d); await wait(70);
   const landed = wraps.filter((w, i) => !moved[i]);
   landed.forEach((w) => { worstLanded = Math.max(worstLanded, w.getBoundingClientRect().bottom); });
-  const text = mobile ? document.querySelector(".chapter-m.is-active h3") : [...(document.querySelector(".chapter.is-active")?.querySelectorAll(".chapter__col") || [])].find((c) => c.textContent.trim());
+  const text = mobile ? document.querySelector(".chapter-m.is-active h3, .chapter-m.is-active p") : [...(document.querySelector(".chapter.is-active")?.querySelectorAll(".chapter__col") || [])].find((c) => c.textContent.trim());
   if (!text) continue;
   const tr = text.getBoundingClientRect();
   for (const w of landed) {

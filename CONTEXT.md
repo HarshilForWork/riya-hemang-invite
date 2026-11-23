@@ -41,7 +41,7 @@ The couple sends each group of guests **one** link. There are **three separate c
 
 ## What's different from the main site (as of 18 Nov 2026)
 
-- Story: one short chapter, "our story", with 5 photos (1, 22 "Fall colours, up north", 17 "Off-roading, birthday edition", 7 "Niagara Falls", 32 with #SheSaidYes; 22, 17, 7 replaced 16 "Adventures, together" on 23 Nov 2026),
+- Story: one short chapter with no heading of its own (the section title "our love story" is enough; Hemang, 23 Nov 2026), 5 photos (1, 22 "Fall colours, up north", 17 "Off-roading, birthday edition", 7 "Niagara Falls", 32 with #SheSaidYes; 22, 17, 7 replaced 16 "Adventures, together" on 23 Nov 2026),
   instead of 5 chapters and 30 photos. Its line (23 Nov 2026, Hemang chose option C; no hot chocolate, "not a milestone"): "A concert in Toronto brought us together. One year and many adventures later, he asked, and she said yes." (ટોરોન્ટોના એક કોન્સર્ટે અમને મેળવ્યા. એક વર્ષ અને ઘણાં સાહસો પછી, તેણે પૂછ્યું અને તેણે હા પાડી.)
 - No big "Two very different people…" text block (the `#vision` section is removed).
 - Detail cards: all six, same as the main site (Sangeet, Wedding, Travel & Stay, RSVP, #RiyaSangHemang,
